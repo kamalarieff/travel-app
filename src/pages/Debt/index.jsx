@@ -141,7 +141,7 @@ const Debt = () => {
 
   return (
     <Container>
-      <div className="flex flex-col">
+      <div className="flex flex-col max-w-xs justify-center items-center mx-auto">
         <div className="my-1">
           <TextField label="Item" variant="filled" />
         </div>
@@ -155,7 +155,7 @@ const Debt = () => {
             onChange={e => setItemvalue(parseInt(e.target.value))}
           />
         </div>
-        <div className="my-1">
+        <div className="flex justify-around my-1 w-5/6">
           <Button variant="contained" color="primary" onClick={handleClick}>
             ADD USER
           </Button>
@@ -175,28 +175,30 @@ const Debt = () => {
             </div>
           );
         })}
-      </div>
-      <Button
-        variant="contained"
-        color="primary"
-        disabled={isDisabled}
-        onClick={handleCalculate}
-      >
-        CALCULATE
-      </Button>
+        <div className="my-1">
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={isDisabled}
+            onClick={handleCalculate}
+          >
+            CALCULATE
+          </Button>
+        </div>
 
-      {result && (
-        <ResultTable>
-          {result.map((item, index) => (
-            <ResultRow
-              key={index}
-              payee={item.payee}
-              receiver={item.receiver}
-              value={item.value}
-            />
-          ))}
-        </ResultTable>
-      )}
+        {result && (
+          <ResultTable>
+            {result.map((item, index) => (
+              <ResultRow
+                key={index}
+                payee={item.payee}
+                receiver={item.receiver}
+                value={item.value}
+              />
+            ))}
+          </ResultTable>
+        )}
+      </div>
     </Container>
   );
 };
