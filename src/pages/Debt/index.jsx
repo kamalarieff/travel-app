@@ -39,6 +39,11 @@ const reducer = (state, action) => {
         draft.users.allIds = R.reject(R.equals(action.id), state.users.allIds);
         break;
       }
+      case "CLEAR_ALL": {
+        draft.users.byId = {};
+        draft.users.allIds = [];
+        break;
+      }
       default: {
         break;
       }
@@ -117,6 +122,10 @@ const Debt = () => {
     showResult(res1);
   };
 
+  const handleClear = () => {
+    dispatch({ type: "CLEAR_ALL" });
+  };
+
   const lessThan2 = R.pipe(R.length, R.lt(R.__, 2));
 
   const itemValueEqualToTotal = R.curry((total, ids) =>
@@ -150,6 +159,9 @@ const Debt = () => {
           <Button variant="contained" color="primary" onClick={handleClick}>
             ADD USER
           </Button>
+          <Button variant="contained" color="primary" onClick={handleClear}>
+            CLEAR
+          </Button>
         </div>
         {allIds.map(userId => {
           return (
@@ -172,6 +184,7 @@ const Debt = () => {
       >
         CALCULATE
       </Button>
+
       {result && (
         <ResultTable>
           {result.map((item, index) => (
