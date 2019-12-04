@@ -1,5 +1,6 @@
 import React, { useState, useReducer } from "react";
 import Container from "../../components/Container";
+import { ResultTable, ResultRow } from "./result";
 import calculate from "./utils";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -156,14 +157,18 @@ const Debt = () => {
       >
         CALCULATE
       </Button>
-      {result &&
-        result.map((item, index) => (
-          <div key={index}>
-            <p>Payee: {item.payee}</p>
-            <p>Receiver: {item.receiver}</p>
-            <p>Value: {item.value}</p>
-          </div>
-        ))}
+      {result && (
+        <ResultTable>
+          {result.map((item, index) => (
+            <ResultRow
+              key={index}
+              payee={item.payee}
+              receiver={item.receiver}
+              value={item.value}
+            />
+          ))}
+        </ResultTable>
+      )}
     </Container>
   );
 };
