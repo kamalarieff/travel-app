@@ -14,40 +14,61 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-  console.log("TCL: reducer -> action", action);
   return produce(state, draft => {
     switch (action.type) {
       case "ADD_USER": {
         draft.users.byId[action.id] = {
-          id: action.id
+          id: action.id,
+          name: "",
+          debt: 0
         };
         draft.users.allIds.push(action.id);
+        break;
       }
       case "UPDATE_USER_NAME": {
         draft.users.byId[action.id].name = action.name;
+        break;
       }
       case "UPDATE_USER_DEBT": {
         draft.users.byId[action.id].debt = action.debt;
+        break;
+      }
+      default: {
+        break;
       }
     }
   });
 };
 
-const UserForm = ({ id, dispatch }) => {
+const UserForm = ({ id, dispatch, name, debt }) => {
   const handleNameChange = e => {
     dispatch({ type: "UPDATE_USER_NAME", id, name: e.target.value });
   };
 
   const handleDebtChange = e => {
-    dispatch({ type: "UPDATE_USER_DEBT", id, debt: e.target.value });
+    dispatch({
+      type: "UPDATE_USER_DEBT",
+      id,
+      debt: parseInt(e.target.value) || 0
+    });
   };
 
   return (
     <>
       <div className="mr-1">
-        <TextField label="Name" variant="filled" onChange={handleNameChange} />
+        <TextField
+          label="Name"
+          variant="filled"
+          onChange={handleNameChange}
+          value={name}
+        />
       </div>
-      <TextField label="Debt" variant="filled" onChange={handleDebtChange} />
+      <TextField
+        label="Debt"
+        variant="filled"
+        onChange={handleDebtChange}
+        value={debt}
+      />
     </>
   );
 };
@@ -63,7 +84,7 @@ const Debt = () => {
 
   const lastId = R.defaultTo(0, R.last(allIds));
 
-  console.log("state", state);
+  console.log("state", state.users.byId);
 
   const handleClick = () => {
     dispatch({ type: "ADD_USER", id: lastId + 1 });
@@ -81,6 +102,19 @@ const Debt = () => {
     showResult(res1);
   };
 
+  const lessThan2 = R.pipe(R.length, R.lt(R.__, 2));
+
+  const itemValueEqualToTotal = R.curry((total, ids) =>
+    R.pipe(
+      R.map(id => byId[id].debt),
+      R.sum,
+      R.equals(total)
+    )(ids)
+  );
+
+  const isDisabled =
+    lessThan2(allIds) || !itemValueEqualToTotal(itemValue, allIds);
+
   return (
     <Container>
       <div className="flex flex-col">
@@ -92,7 +126,7 @@ const Debt = () => {
             label="Value"
             variant="filled"
             value={itemValue}
-            onChange={e => setItemvalue(e.target.value)}
+            onChange={e => setItemvalue(parseInt(e.target.value))}
           />
         </div>
         <div className="my-1">
@@ -100,16 +134,24 @@ const Debt = () => {
             ADD USER
           </Button>
         </div>
-        {allIds.map(userId => (
-          <div key={userId} className="flex my-1">
-            <UserForm id={userId} dispatch={dispatch} />
-          </div>
-        ))}
+        {allIds.map(userId => {
+          console.log("TCL: Debt -> byId[userId]", byId[userId]);
+          return (
+            <div key={userId} className="flex my-1">
+              <UserForm
+                id={userId}
+                dispatch={dispatch}
+                name={byId[userId].name}
+                debt={byId[userId].debt}
+              />
+            </div>
+          );
+        })}
       </div>
       <Button
         variant="contained"
         color="primary"
-        disabled={allIds.length < 2}
+        disabled={isDisabled}
         onClick={handleCalculate}
       >
         CALCULATE
