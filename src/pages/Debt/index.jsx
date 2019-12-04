@@ -126,7 +126,9 @@ const Debt = () => {
           <TextField
             label="Value"
             variant="filled"
+            type="number"
             value={itemValue}
+            error={isNaN(itemValue)}
             onChange={e => setItemvalue(parseInt(e.target.value))}
           />
         </div>
