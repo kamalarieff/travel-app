@@ -1,5 +1,6 @@
 import React, { useState, useReducer } from "react";
 import Container from "../../components/Container";
+import calculate from "./utils";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import produce from "immer";
@@ -52,6 +53,7 @@ const UserForm = ({ id, dispatch }) => {
 };
 
 const Debt = () => {
+  const [itemValue, setItemvalue] = useState(0);
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const {
@@ -70,11 +72,12 @@ const Debt = () => {
     const res = allIds.map(id => {
       return {
         name: byId[id].name,
-        debt: byId[id].debt
+        price: byId[id].debt
       };
     });
 
-    console.log("TCL: handleCalculate -> res", res);
+    const res1 = calculate({ value: itemValue, users: res });
+    console.log("TCL: handleCalculate -> res1", res1);
   };
 
   return (
@@ -84,7 +87,12 @@ const Debt = () => {
           <TextField label="Item" variant="filled" />
         </div>
         <div className="my-1">
-          <TextField label="Value" variant="filled" />
+          <TextField
+            label="Value"
+            variant="filled"
+            value={itemValue}
+            onChange={e => setItemvalue(e.target.value)}
+          />
         </div>
         <div className="my-1">
           <Button variant="contained" color="primary" onClick={handleClick}>
@@ -100,7 +108,7 @@ const Debt = () => {
       <Button
         variant="contained"
         color="primary"
-        disabled={!allIds}
+        disabled={allIds.length < 2}
         onClick={handleCalculate}
       >
         CALCULATE
