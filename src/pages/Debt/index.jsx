@@ -34,6 +34,11 @@ const reducer = (state, action) => {
         draft.users.byId[action.id].debt = action.debt;
         break;
       }
+      case "DELETE_USER": {
+        delete draft.users.byId[action.id];
+        draft.users.allIds = R.reject(R.equals(action.id), state.users.allIds);
+        break;
+      }
       default: {
         break;
       }
@@ -54,8 +59,12 @@ const UserForm = ({ id, dispatch, name, debt }) => {
     });
   };
 
+  const handleDelete = () => {
+    dispatch({ type: "DELETE_USER", id });
+  };
+
   return (
-    <>
+    <div className="flex">
       <div className="mr-1">
         <TextField
           label="Name"
@@ -64,13 +73,18 @@ const UserForm = ({ id, dispatch, name, debt }) => {
           value={name}
         />
       </div>
-      <TextField
-        label="Debt"
-        variant="filled"
-        onChange={handleDebtChange}
-        value={debt}
-      />
-    </>
+      <div className="mr-1">
+        <TextField
+          label="Debt"
+          variant="filled"
+          onChange={handleDebtChange}
+          value={debt}
+        />
+      </div>
+      <Button variant="contained" color="primary" onClick={handleDelete}>
+        Delete
+      </Button>
+    </div>
   );
 };
 
@@ -85,7 +99,7 @@ const Debt = () => {
 
   const lastId = R.defaultTo(0, R.last(allIds));
 
-  console.log("state", state.users.byId);
+  console.log("state", state.users);
 
   const handleClick = () => {
     dispatch({ type: "ADD_USER", id: lastId + 1 });
@@ -138,7 +152,6 @@ const Debt = () => {
           </Button>
         </div>
         {allIds.map(userId => {
-          console.log("TCL: Debt -> byId[userId]", byId[userId]);
           return (
             <div key={userId} className="flex my-1">
               <UserForm
