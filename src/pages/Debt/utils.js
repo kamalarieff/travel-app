@@ -26,21 +26,27 @@ const calculateDebt = ({ value, users }) => {
     const remaining = tempY.remaining + tempX.remaining;
 
     if (remaining == 0) {
-      res.push(
-        `${tempX.name} pays RM ${Math.abs(tempX.remaining)} to ${tempY.name} `
-      );
+      res.push({
+        payee: tempX.name,
+        receiver: tempY.name,
+        value: Math.abs(tempX.remaining)
+      });
       i++;
       j++;
     } else if (remaining < 0) {
-      res.push(
-        `${tempX.name} pays RM ${Math.abs(tempY.remaining)} to ${tempY.name} `
-      );
+      res.push({
+        payee: tempX.name,
+        receiver: tempY.name,
+        value: Math.abs(tempY.remaining)
+      });
       j++;
       hasToPay[i].remaining = remaining;
     } else {
-      res.push(
-        `${tempX.name} pays RM ${Math.abs(tempX.remaining)} to ${tempY.name} `
-      );
+      res.push({
+        payee: tempX.name,
+        receiver: tempY.name,
+        value: Math.abs(tempX.remaining)
+      });
       i++;
       hasToGet[j].remaining = remaining;
     }

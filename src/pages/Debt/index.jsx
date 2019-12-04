@@ -55,6 +55,7 @@ const UserForm = ({ id, dispatch }) => {
 const Debt = () => {
   const [itemValue, setItemvalue] = useState(0);
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [result, showResult] = useState(null);
 
   const {
     users: { allIds, byId }
@@ -77,7 +78,7 @@ const Debt = () => {
     });
 
     const res1 = calculate({ value: itemValue, users: res });
-    console.log("TCL: handleCalculate -> res1", res1);
+    showResult(res1);
   };
 
   return (
@@ -113,6 +114,14 @@ const Debt = () => {
       >
         CALCULATE
       </Button>
+      {result &&
+        result.map((item, index) => (
+          <div key={index}>
+            <p>Payee: {item.payee}</p>
+            <p>Receiver: {item.receiver}</p>
+            <p>Value: {item.value}</p>
+          </div>
+        ))}
     </Container>
   );
 };
