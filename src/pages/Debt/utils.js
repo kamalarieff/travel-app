@@ -1,6 +1,5 @@
 const calculateDebt = ({ value, users }) => {
   const perPerson = value / users.length;
-  console.log("TCL: calculateDebt -> perPerson", perPerson);
 
   const newUsers = users.map(({ name, price }) => {
     return {
@@ -8,12 +7,9 @@ const calculateDebt = ({ value, users }) => {
       remaining: price - perPerson
     };
   });
-  console.log("TCL: calculateDebt -> newUsers", newUsers);
 
   const hasToPay = newUsers.filter(({ remaining }) => remaining < 0);
-  console.log("TCL: hasToPay", hasToPay);
   const hasToGet = newUsers.filter(({ remaining }) => remaining > 0);
-  console.log("TCL: hasToGet", hasToGet);
 
   let i = 0,
     j = 0,

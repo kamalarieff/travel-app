@@ -111,8 +111,6 @@ const Debt = () => {
 
   const lastId = R.defaultTo(0, R.last(allIds));
 
-  console.log("state", state.users);
-
   const handleClick = () => {
     dispatch({ type: "ADD_USER", id: lastId + 1 });
   };
