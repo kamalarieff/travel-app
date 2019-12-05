@@ -6,7 +6,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
 const ResultTable = ({ children }) => (
-  <div className="flex rounded p-4 mt-4 max-w-sm">
+  <div id="result-table" className="flex rounded p-4 mt-4 max-w-sm">
     <Table size="small" aria-label="a dense table">
       <TableHead>
         <TableRow>

@@ -51,6 +51,7 @@ describe("E2E Tests", () => {
     cy.get(".userform").should("have.length", 1);
     cy.get("#clear").click();
     cy.get(".userform").should("have.length", 0);
+    cy.get("#result-table").should("not.be.visible");
   });
 
   it("calculate debt with 4 users", () => {
