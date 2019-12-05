@@ -7,6 +7,10 @@ describe("E2E Tests", () => {
     cy.get("#item").type("test");
     cy.get("#item-value")
       .clear()
+      .parent()
+      .should("have.class", "Mui-error");
+    cy.get("#item-value")
+      .clear()
       .type("100");
 
     cy.get("#calculate").should("be.disabled");
