@@ -69,9 +69,10 @@ const UserForm = ({ id, dispatch, name, debt }) => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex userform">
       <div className="mr-1">
         <TextField
+          data-testid="username"
           label="Name"
           variant="filled"
           onChange={handleNameChange}
@@ -80,13 +81,19 @@ const UserForm = ({ id, dispatch, name, debt }) => {
       </div>
       <div className="mr-1">
         <TextField
+          data-testid="debt"
           label="Debt"
           variant="filled"
           onChange={handleDebtChange}
           value={debt}
         />
       </div>
-      <Button variant="contained" color="primary" onClick={handleDelete}>
+      <Button
+        data-testid={`delete-user-${id}`}
+        variant="contained"
+        color="primary"
+        onClick={handleDelete}
+      >
         Delete
       </Button>
     </div>
@@ -143,10 +150,11 @@ const Debt = () => {
     <Container>
       <div className="flex flex-col max-w-xs justify-center items-center mx-auto">
         <div className="my-1">
-          <TextField label="Item" variant="filled" />
+          <TextField label="Item" variant="filled" id="item" />
         </div>
         <div className="my-1">
           <TextField
+            id="item-value"
             label="Value"
             variant="filled"
             type="number"
@@ -156,10 +164,20 @@ const Debt = () => {
           />
         </div>
         <div className="flex justify-around my-1 w-5/6">
-          <Button variant="contained" color="primary" onClick={handleClick}>
+          <Button
+            id="add-user"
+            variant="contained"
+            color="primary"
+            onClick={handleClick}
+          >
             ADD USER
           </Button>
-          <Button variant="contained" color="primary" onClick={handleClear}>
+          <Button
+            id="clear"
+            variant="contained"
+            color="primary"
+            onClick={handleClear}
+          >
             CLEAR
           </Button>
         </div>
@@ -177,6 +195,7 @@ const Debt = () => {
         })}
         <div className="my-1">
           <Button
+            id="calculate"
             variant="contained"
             color="primary"
             disabled={isDisabled}

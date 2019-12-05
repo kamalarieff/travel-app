@@ -7,6 +7,7 @@
 
 # testing
 /coverage
+out.json
 
 # production
 /build
