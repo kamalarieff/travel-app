@@ -2,7 +2,7 @@ import calculate from "../../src/pages/Debt/utils";
 
 describe("Unit Test Application Code", () => {
   context("Debt calculator", () => {
-    it("can add numbers", () => {
+    it("return the correct debt calculated", () => {
       const value = 30;
       const users = [
         {
@@ -23,7 +23,7 @@ describe("Unit Test Application Code", () => {
       ]);
     });
 
-    it("can add numbers2", () => {
+    it("return the correct debt calculated with data shuffled", () => {
       const value = 60;
       const users = [
         {
