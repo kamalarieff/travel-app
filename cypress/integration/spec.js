@@ -2,6 +2,12 @@ beforeEach(() => {
   cy.visit("/");
 });
 
+describe("Visual Regression Tests", () => {
+  it("homepage", () => {
+    cy.percySnapshot();
+  });
+});
+
 describe("E2E Tests", () => {
   it("calculate debt", () => {
     cy.get("#item").type("test");

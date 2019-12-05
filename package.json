@@ -16,7 +16,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress": "cypress open"
+    "cypress": "percy exec -- cypress run"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,6 +36,7 @@
   "devDependencies": {
     "@cypress/code-coverage": "^1.10.2",
     "@cypress/instrument-cra": "^1.0.0",
+    "@percy/cypress": "^2.2.0",
     "autoprefixer": "^9.7.3",
     "cypress": "^3.7.0",
     "istanbul-lib-coverage": "^2.0.5",
