@@ -103,7 +103,7 @@ const UserForm = ({ id, dispatch, name, debt }) => {
 const Debt = () => {
   const [itemValue, setItemvalue] = useState(0);
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [result, setResult] = useState(null);
+  const [result, showResult] = useState(null);
 
   const {
     users: { allIds, byId }
@@ -124,12 +124,11 @@ const Debt = () => {
     });
 
     const res1 = calculate({ value: itemValue, users: res });
-    setResult(res1);
+    showResult(res1);
   };
 
   const handleClear = () => {
     dispatch({ type: "CLEAR_ALL" });
-    setResult(null);
   };
 
   const lessThan2 = R.pipe(R.length, R.lt(R.__, 2));
